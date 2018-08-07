@@ -1,0 +1,100 @@
+<div id="inputList" class="header">
+    <h2>Lista</h2>
+    <input type="text" id="addList" placeholder="Agraga una tarea...">
+    <span onclick="newElement()" class="addButton">Agregar</span>
+</div>
+
+<ul id="list">
+    <li>listado</li>
+</ul>
+<script>
+    //Boton de la lista
+    var todoList = document.getElementsByTagName("li");
+    var i;
+    for ( i = 0; i < todoList.length; i++ ){
+        var span = document.createElement("span");//crear span
+        var textClose = document.createTextNode("borrar")//crear texto para agregar a span
+        todoList[i].appendChild(span);//a cada elemento de todoList asignarle span
+        span.appendChild(textClose);
+        span.className = "del";
+    };
+
+    // Boton Borrar
+    var del = document.getElementsByClassName("del");
+    var i;
+    for (i = 0; i < del.length; i++) {
+        del[i].onclick = function() {
+            var div = this.parentElement;
+            div.style.display = "none";
+        }
+    }
+
+    // Elemento seleccionado.
+    var list = document.querySelector('ul');
+    list.addEventListener('click', function(ev) {
+        if (ev.target.tagName === 'LI') {
+            ev.target.classList.toggle('checked');
+        }
+    }, false);
+
+    // Crear Elemento de la lista
+    function newElement() {
+        var li = document.createElement("li");
+        var input = document.getElementById("addList").value;
+        var text = document.createTextNode(input);
+        li.appendChild(text);
+
+        //TODO: validacion.
+        if (input ===  ""){
+            alert("Debes agregar algo a lista");
+        }
+        else {
+            document.getElementById("list").appendChild(li);
+            document.getElementById("addList").value = "";
+        };
+
+        var span = document.createElement("span");
+        var textClose = document.createTextNode("borrar");
+        li.appendChild(span);
+        span.appendChild(textClose);
+        span.className = "del";
+
+        for (i = 0; i < del.length; i++) {
+            del[i].onclick = function() {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+    };
+</script>
+<style>
+    #list {
+        padding: 0;
+    }
+    #list li {
+        border-bottom: 1px solid #c3c3c3;
+        padding: 10px;
+        list-style: none;
+        position: relative;
+        background: #eaeaea;
+    }
+    #list li.checked {
+        background: orange;
+        color: #fff;
+    }
+    .del {
+        position: absolute;
+        right: 10px;
+    }
+    .addButton {
+        padding: 10px;
+        background: #d9d9d9;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .addButton:hover {
+        background-color: #bbb;
+        padding: 10px;
+    }
+</style>
